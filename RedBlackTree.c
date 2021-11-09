@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Anirudh Sharma 2K20/SE/17
+// Bhavil Ahuja 2K20/SE/42
+
 enum nodeColor
 {
     Red,
