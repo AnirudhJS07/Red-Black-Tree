@@ -15,7 +15,7 @@ struct ourRedBlackTreeNode
     //index-1 for right
 } *root = NULL;
 
-struct ourRedBlackTreeNode *createNode(int data)
+struct ourRedBlackTreeNode *createNode(int data) //creates a new node with required specifications
 {
     struct ourRedBlackTreeNode *newnode;
     newnode = (struct ourRedBlackTreeNode *)malloc(sizeof(struct ourRedBlackTreeNode));
@@ -38,7 +38,7 @@ void insertion(int data)
 
     stack[ht] = root;
     direction[ht++] = 0;
-    while (ptr != NULL)
+    while (ptr != NULL) //this while loop takes the pointer to the desired parent
     {
         if (ptr->data == data)
         {
@@ -50,25 +50,25 @@ void insertion(int data)
         ptr = ptr->children[index];
         direction[ht++] = index;
     }
-    stack[ht - 1]->children[index] = newnode = createNode(data);
+    stack[ht - 1]->children[index] = newnode = createNode(data); //stack[ht-1] is the parent
     while ((ht >= 3) && (stack[ht - 1]->color == Red))
     {
-        if (direction[ht - 2] == 0)
+        if (direction[ht - 2] == 0) //checks whether parent is left child of its grandparent.
         {
-            yPtr = stack[ht - 2]->children[1];
-            if (yPtr != NULL && yPtr->color == Red)
+            yPtr = stack[ht - 2]->children[1]; //represents sibling of the parent
+            if (yPtr != NULL && yPtr->color == Red) //checks whether sibling is red.
             {
-                stack[ht - 2]->color = Red;
-                stack[ht - 1]->color = yPtr->color = Black;
+                stack[ht - 2]->color = Red; //recolouring of grandparent.
+                stack[ht - 1]->color = yPtr->color = Black; //recolouring of both parent and sibling/
                 ht = ht - 2;
             }
-            else
+            else //if parent's sibling is black
             {
                 if (direction[ht - 1] == 0)
                 {
                     yPtr = stack[ht - 1];
                 }
-                else
+                else //rotation and recolouring
                 {
                     xPtr = stack[ht - 1];
                     yPtr = xPtr->children[1];
@@ -92,7 +92,7 @@ void insertion(int data)
                 break;
             }
         }
-        else
+        else //same as if but left and right gets swapped.
         {
             yPtr = stack[ht - 2]->children[0];
             if ((yPtr != NULL) && (yPtr->color == Red))
@@ -149,7 +149,7 @@ void deletion(int data)
     }
 
     ptr = root;
-    while (ptr != NULL)
+    while (ptr != NULL) //takes the pointer to the desired location
     {
         if ((data - ptr->data) == 0)
             break;
@@ -159,7 +159,7 @@ void deletion(int data)
         ptr = ptr->children[diff];
     }
 
-    if (ptr->children[1] == NULL)
+    if (ptr->children[1] == NULL) //
     {
         if ((ptr == root) && (ptr->children[0] == NULL))
         {
